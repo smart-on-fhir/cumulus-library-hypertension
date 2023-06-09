@@ -1,0 +1,36 @@
+[project]
+name = "cumulus-library-hypertension"
+version = "0.0.1"
+requires-python = ">= 3.9, <3.12"
+dependencies = [
+    "cumulus-library >= 0.1.2",
+    "sqlfluff == 2.0.2"
+]
+description = "SQL generation for cumulus covid symptom analysis"
+readme = "README.md"
+license = { text="Apache License 2.0" }
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Home = "https://smarthealthit.org/cumulus-a-universal-sidecar-for-a-smart-learning-healthcare-system/"
+Documentation = "https://docs.smarthealthit.org/cumulus/"
+Source = "https://github.com/smart-on-fhir/cumulus-library-hypertension"
+
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "pylint",
+]
+
+[tool.flit.sdist]
+include = ["htn/"]
