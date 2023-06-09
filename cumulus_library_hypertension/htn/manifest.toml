@@ -1,0 +1,15 @@
+study_prefix = "covid_symptom"
+
+[sql_config]
+file_names = [
+    "observation_vital_signs_bp.sql",
+    "htn_define_dx.sql",
+    "htn_define_rx.sql",
+    "htn_define_bp.sql",
+]
+
+
+[export_config]
+export_list = [
+    "htn__count_dx",
+]
