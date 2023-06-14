@@ -52,19 +52,19 @@ def get_path(filename=None):
 
 
 if __name__ == "__main__":
-    diagnosis = include_coding('htn_valueset_dx_icd10.json') + \
-                include_coding('htn_valueset_dx_snomed.json')
+    diagnosis = include_coding('valueset_dx_icd10.json') + \
+                include_coding('valueset_dx_snomed.json')
 
-    medication = include_coding('htn_valueset_rx_rxnorm.json')
+    medication = include_coding('valueset_rx_rxnorm.json')
 
-    vaccine = include_coding('core_valueset_vaccine_cvx_cste.json') +\
-              include_coding('core_valueset_vaccine_rxnorm_cste.json') + \
-              include_coding('core_valueset_vaccine_rxnorm_hl7.json')
+    vaccine = include_coding('valueset_vaccine_cvx_cste.json') +\
+              include_coding('valueset_vaccine_rxnorm_cste.json') + \
+              include_coding('valueset_vaccine_rxnorm_hl7.json')
 
-    frailty = include_coding('htn_valueset_frailty_cpt_ncqa.json') + \
-              include_coding('htn_valueset_frailty_icd10_ncqa.json') + \
-              include_coding('htn_valueset_frailty_hcpcs_ncqa.json') + \
-              include_coding('htn_valueset_frailty_snomed_ncqa.json')
+    frailty = include_coding('valueset_frailty_cpt_ncqa.json') + \
+              include_coding('valueset_frailty_icd10_ncqa.json') + \
+              include_coding('valueset_frailty_hcpcs_ncqa.json') + \
+              include_coding('valueset_frailty_snomed_ncqa.json')
 
     write_view_sql('htn__define_dx', diagnosis)
     write_view_sql('htn__define_rx', medication)
