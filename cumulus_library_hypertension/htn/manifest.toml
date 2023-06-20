@@ -1,4 +1,4 @@
-study_prefix = "covid_symptom"
+study_prefix = "htn"
 
 [sql_config]
 file_names = [
