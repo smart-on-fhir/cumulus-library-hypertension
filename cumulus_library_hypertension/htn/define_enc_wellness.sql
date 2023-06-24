@@ -1,0 +1,7 @@
+create or replace view htn__define_enc_wellness as select * from (values
+('http://www.ama-assn.org/go/cpt', '99395', 'Periodic comprehensive preventive medicine reevaluation and management of an individual including an age and gender appropriate history, examination, counseling/anticipatory guidance/risk factor reduction interventions, and the ordering of laboratory/diagnostic procedures, established patient; 18-39 years')
+,('http://www.ama-assn.org/go/cpt', '99396', 'Periodic comprehensive preventive medicine reevaluation and management of an individual including an age and gender appropriate history, examination, counseling/anticipatory guidance/risk factor reduction interventions, and the ordering of laboratory/diagnostic procedures, established patient; 40-64 years')
+,('http://www.ama-assn.org/go/cpt', '99397', 'Periodic comprehensive preventive medicine reevaluation and management of an individual including an age and gender appropriate history, examination, counseling/anticipatory guidance/risk factor reduction interventions, and the ordering of laboratory/diagnostic procedures, established patient; 65 years and older')
+,('http://www.nlm.nih.gov/research/umls/hcpcs', 'G0438', 'Annual wellness visit; includes a personalized prevention plan of service (pps), initial visit')
+,('http://www.nlm.nih.gov/research/umls/hcpcs', 'G0439', 'Annual wellness visit, includes a personalized prevention plan of service (pps), subsequent visit')
+) AS t (system, code, display) ;
