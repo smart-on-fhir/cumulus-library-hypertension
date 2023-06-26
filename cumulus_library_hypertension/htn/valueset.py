@@ -35,6 +35,13 @@ def valueset2coding(valueset_json) -> List[Coding]:
                 parsed.append(Coding(concept))
     return parsed
 
+def escape(sql: str) -> str:
+    """
+    :param sql: SQL potentially containing special chars
+    :return: special chars removed like tic(') and semi(;).
+    """
+    return sql.replace("'", "").replace(";", ".")
+
 def coding2view(view_name: str, concept_list: List[Coding]) -> str:
     """
     :param view_name: like define_type
@@ -46,7 +53,7 @@ def coding2view(view_name: str, concept_list: List[Coding]) -> str:
     footer = ") AS t (system, code, display) ;"
     content = list()
     for concept in concept_list:
-        safe_display = concept.display.replace("'", "-")
+        safe_display = escape(concept.display)
         content.append(f"('{concept.system}', '{concept.code}', '{safe_display}')")
     content = '\n,'.join(content)
     return header + '\n' + content + '\n' + footer
