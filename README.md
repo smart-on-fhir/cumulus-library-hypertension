@@ -70,31 +70,27 @@ CMS _excludes_ blood pressure measures on encounters where certain substances ar
 * Cholinesterase Inhibitors
 * CNS agents
 * Dementia drugs
-* Vaccinations
-* Injections
 
 -----
 **ENCOUNTER** 
 
 BP measures from inpatient stays and ED visits should are _insufficient_. 
 
-**Include** (CMS)
+**Include**
 
 * Hypertension Screening
+* Office Visit
+* Home Visit
+* Wellness Visit
+* Preventive Care
 
 **Exclude** (CMS)
 
-_Services that affect BP measures._
-
-* Tuberculosis Test
-* IUD Insertion
-* Eye Exam
-* Wart/Mole removal
+* Inpatient
+* Palliative care 
+* Hospice services
 
 _Patients with excessive morbidity burden._
 
 * Frailty
-* Palliative care 
-* Hospice services
 * Renal transplant/service
-

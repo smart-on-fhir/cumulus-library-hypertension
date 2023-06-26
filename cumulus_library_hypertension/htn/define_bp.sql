@@ -1,6 +1,5 @@
--- https://loinc.org/85353-1/
--- Vital signs, weight, height, head circumference, oxygen saturation and BMI panel
-
+-- http://hl7.org/fhir/us/vitals/StructureDefinition/blood-pressure-panel
+--
 --85354-9	Blood pressure panel with all children optional (PANEL)
 -- 8480-6	Systolic blood pressure
 -- 8462-4	Diastolic blood pressure

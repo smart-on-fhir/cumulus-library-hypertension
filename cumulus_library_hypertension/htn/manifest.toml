@@ -2,10 +2,30 @@ study_prefix = "htn"
 
 [sql_config]
 file_names = [
-    "observation_vital_signs_bp.sql",
-    "htn_define_dx.sql",
-    "htn_define_rx.sql",
-    "htn_define_bp.sql",
+    # blood pressure
+    "define_bp.sql",
+
+    # Diagnosis
+    "define_dx.sql",
+    "define_dx_essential.sql",
+    "define_dx_existing.sql",
+
+    # Medication
+    "define_rx.sql",
+
+    # Encounter Types
+    "define_enc_home.sql",
+    "define_enc_office.sql",
+    "define_enc_wellness.sql",
+    "define_enc_preventive.sql",
+    "define_enc_nursing.sql",
+    "define_enc_hospice.sql",
+    "define_enc_inpatient.sql",
+    "define_enc_palliative.sql",
+
+    # health status
+    "define_esrd.sql",
+    "define_frailty.sql",
 ]
 
 
