@@ -97,7 +97,7 @@ def define_dx():
 
 def define_rx_include():
     define('define_rx',
-           ['valueset_rx_antihypertensive_rxnorm_aha.json'])
+           ['valueset_rx_rxnorm_aha.json'])
 
 def define_rx_exclude():
     define('define_rx_exclude',
@@ -171,27 +171,37 @@ def define_enc_exclude():
 
 def define_pregnancy():
     define('define_pregnancy',
-           ['valueset_pregnancy_icd10_aha.json',
-            'valueset_pregnancy_snomed_aha.json'])
+           ['valueset_pregnancy_dx_icd10_aha.json',
+            'valueset_pregnancy_dx_snomed_aha.json'])
 
 def define_frailty():
     define('define_frailty',
-           ['valueset_frailty_diagnosis_icd10_ncqa.json',
-            'valueset_frailty_symptom_icd10_ncqa.json',
-            'valueset_frailty_snomed_ncqa.json',
-            'valueset_frailty_cpt_ncqa.json',
-            'valueset_frailty_hcpcs_ncqa.json',
-            'valueset_advanced_illness_icd10_ncqa.json',
+           ['valueset_frailty_device_snomed_ncqa.json',
+            'valueset_frailty_dx_icd10_ncqa.json',
+            'valueset_frailty_dx_snomed_ncqa.json',
+            'valueset_frailty_enc_snomed_ncqa.json',
+            'valueset_frailty_enc_cpt_ncqa.json',
+            'valueset_frailty_enc_hcpcs_ncqa.json',
+            'valueset_frailty_symptom_snomed_ncqa.json',
+            'valueset_frailty_symptom_icd10_ncqa.json'])
+
+def define_advanced_illness():
+    define('define_advanced_illness',
+           ['valueset_advanced_illness_icd10_ncqa.json',
             'valueset_advanced_illness_snomed_ncqa.json'])
 
 def define_esrd():
     define('define_esrd',
-           ['valueset_esrd_diagnosis_icd10_ncqa.json',
-            'valueset_esrd_diagnosis_snomed_ncqa.json',
+           ['valueset_esrd_dx_icd10_ncqa.json',
+            'valueset_esrd_dx_snomed_ncqa.json',
             'valueset_esrd_documented_hcpcs.json',
+            'valueset_esrd_dialysis_cpt_ncqa.json',
+            'valueset_esrd_dialysis_hcpcs_ncqa.json',
+            'valueset_esrd_dialysis_snomed_ncqa.json',
             'valueset_esrd_transplant_snomed_ncqa.json',
             'valueset_esrd_transplant_icd10cm_ncqa.json',
             'valueset_esrd_transplant_icd10pcs_ncqa.json'])
+
 
 def define_vaccine():
     """
@@ -211,5 +221,6 @@ if __name__ == "__main__":
     define_enc_include()
     define_enc_exclude()
     define_pregnancy()
-    define_frailty()
     define_esrd()
+    define_advanced_illness()
+    define_frailty()
