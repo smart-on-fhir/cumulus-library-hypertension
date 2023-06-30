@@ -115,9 +115,9 @@ def define_enc():
             'valueset_enc_wellness_hcpcs_ncqa.json'])
 
     define('define_enc_inpatient',
-           ['valueset_enc_acute_inpatient_cpt_ncqa.json',
-            'valueset_enc_acute_inpatient_snomed_acep.json',
-            'valueset_enc_acute_inpatient_snomed_ncqa.json'])
+           ['valueset_enc_inpatient_acute_cpt_ncqa.json',
+            'valueset_enc_inpatient_acute_snomed_acep.json',
+            'valueset_enc_inpatient_acute_snomed_ncqa.json'])
 
     define('define_enc_hospice',
            ['valueset_enc_hospice_hcpcs.json',
