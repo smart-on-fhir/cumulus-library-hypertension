@@ -1,6 +1,3 @@
-// 20230629124213
-// https://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.11.1050?_format=json
-
 {
   "resourceType": "ValueSet",
   "id": "2.16.840.1.113883.3.464.1003.101.11.1050",
