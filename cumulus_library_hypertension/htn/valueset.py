@@ -5,7 +5,7 @@ from typing import List
 from fhirclient.models.coding import Coding
 
 def path_valueset(valueset_json: str) -> str:
-    return os.path.join(os.path.dirname(__file__), valueset_json)
+    return os.path.join(os.path.dirname(__file__), 'valueset', valueset_json)
 
 def path_sql(view_name: str) -> str:
     return os.path.join(os.path.dirname(__file__), f'{view_name}.sql')
