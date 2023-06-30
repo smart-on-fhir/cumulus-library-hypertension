@@ -95,9 +95,14 @@ def define_dx():
     define('define_dx_existing',
            ['valueset_dx_preexisting_icd10.json', 'valueset_dx_preexisting_snomed.json'])
 
-def define_rx():
+def define_rx_include():
     define('define_rx',
            ['valueset_rx_antihypertensive_rxnorm_aha.json'])
+
+def define_rx_exclude():
+    define('define_rx_exclude',
+           ['valueset_dementia_rx_rxnorm_aan.json',
+            'valueset_dementia_rx_rxnorm_ncqa.json'])
 
 
 def define_enc_include():
@@ -170,6 +175,9 @@ def define_esrd():
             'valueset_esrd_transplant_icd10pcs_ncqa.json'])
 
 def define_vaccine():
+    """
+    Common example of an outpatient procedure useful for testing.
+    """
     define('define_vaccine',
            ['valueset_vaccine_cvx_cste.json',
             'valueset_vaccine_cvx_hl7.json',
@@ -179,7 +187,8 @@ def define_vaccine():
 
 if __name__ == "__main__":
     define_dx()
-    define_rx()
+    define_rx_include()
+    define_rx_exclude()
     define_enc_include()
     define_enc_exclude()
     define_frailty()
