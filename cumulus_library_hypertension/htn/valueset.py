@@ -1,13 +1,30 @@
 import os
+import json
 from typing import List
-from cumulus_library.helper import load_json
+
 from fhirclient.models.coding import Coding
 
-def get_path(filename=None):
-    if filename:
-        return os.path.join(os.path.dirname(__file__), filename)
-    else:
-        return os.path.dirname(__file__)
+def path_valueset(valueset_json: str) -> str:
+    return os.path.join(os.path.dirname(__file__), valueset_json)
+
+def path_sql(view_name: str) -> str:
+    return os.path.join(os.path.dirname(__file__), f'{view_name}.sql')
+
+def load_valueset(filepath: str) -> dict:
+    print(f'\nload valueset:{filepath}')
+    with open(filepath, "r", encoding="UTF-8") as fp:
+        return json.load(fp)
+
+def save_sql(filepath, view_sql: str) -> str:
+    """
+    :param view_name: create view as
+    :param view_sql: SQL commands
+    :param outfile: default view_name.sql
+    :return: outfile path
+    """
+    with open(filepath, 'w') as fp:
+        fp.write(view_sql)
+    return filepath
 
 def valueset2coding(valueset_json) -> List[Coding]:
     """
@@ -22,10 +39,7 @@ def valueset2coding(valueset_json) -> List[Coding]:
     :param valueset_json: ValueSet file, expecially those provided by NLM/ONC/VSAC
     :return: list of codeable concepts (system, code, display) to include
     """
-    filepath = get_path(valueset_json)
-    print(f'\nvalueset:{filepath}')
-
-    valueset = load_json(get_path(valueset_json))
+    valueset = load_valueset(valueset_json)
     parsed = list()
 
     for include in valueset['compose']['include']:
@@ -58,20 +72,6 @@ def coding2view(view_name: str, concept_list: List[Coding]) -> str:
     content = '\n,'.join(content)
     return header + '\n' + content + '\n' + footer
 
-def save(view_name: str, view_sql: str, outfile=None) -> str:
-    """
-    :param view_name: create view as
-    :param view_sql: SQL commands
-    :param outfile: default view_name.sql
-    :return: outfile path
-    """
-    if not outfile:
-        outfile = get_path(f'{view_name}.sql')
-    print(f'\nsave({view_name})')
-    print(f'{outfile}\n')
-    with open(outfile, 'w') as fp:
-        fp.write(view_sql)
-    return outfile
 
 def define(view_name: str, fileset_json: List[str]) -> str:
     """
@@ -81,9 +81,9 @@ def define(view_name: str, fileset_json: List[str]) -> str:
     """
     codings = list()
     for filename in fileset_json:
-        codings += valueset2coding(filename)
+        codings += valueset2coding(path_valueset(filename))
 
-    return save(view_name, coding2view(view_name, codings))
+    return save_sql(path_sql(view_name), coding2view(view_name, codings))
 
 def define_dx():
     define('define_dx',
