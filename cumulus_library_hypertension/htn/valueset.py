@@ -165,6 +165,10 @@ def define_enc_exclude():
            ['valueset_enc_edvisit_cpt_ncqa.json',
             'valueset_enc_edvisit_snomed_ncqa.json'])
 
+    define('define_enc_icu',
+           ['valueset_enc_icu_snomed_cdc.json',
+            'valueset_enc_icu_snomed_tjc.json'])
+
 def define_frailty():
     define('define_frailty',
            ['valueset_frailty_diagnosis_icd10_ncqa.json',
