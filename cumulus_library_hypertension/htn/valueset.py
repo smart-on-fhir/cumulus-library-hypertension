@@ -99,12 +99,23 @@ def define_rx():
     define('define_rx',
            ['valueset_rx_antihypertensive_rxnorm_aha.json'])
 
-def define_enc():
+
+def define_enc_include():
+    """
+    Outpatient type facilities, not ED Visit or Inpatient/Nursing/etc
+    """
+    define('define_enc_outpatient',
+           ['valueset_enc_outpatient_cpt_ncqa.json',
+            'valueset_enc_outpatient_hcpcs_ncqa.json',
+            'valueset_enc_outpatient_snomed_ncqa.json'])
+
     define('define_enc_office',
-           ['valueset_enc_office_cpt_ncqa.json'])
+           ['valueset_enc_office_cpt_ncqa.json',
+            'valueset_enc_office_snomed_ncqa.json'])
 
     define('define_enc_home',
-           ['valueset_enc_home_cpt_ncqa.json'])
+           ['valueset_enc_home_snomed_ncqa.json',
+            'valueset_enc_home_cpt_ncqa.json'])
 
     define('define_enc_preventive',
            ['valueset_enc_preventive_established_cpt_ncqa.json',
@@ -114,6 +125,15 @@ def define_enc():
            ['valueset_enc_wellness_cpt_ncqa.json',
             'valueset_enc_wellness_hcpcs_ncqa.json'])
 
+    define('define_enc_telemed',
+           ['valueset_enc_telemed_cpt_ncqa.json',
+            'valueset_enc_telemed_snomed_ncqa.json'])
+
+
+def define_enc_exclude():
+    """
+    :return:
+    """
     define('define_enc_inpatient',
            ['valueset_enc_inpatient_acute_cpt_ncqa.json',
             'valueset_enc_inpatient_acute_snomed_acep.json',
@@ -160,6 +180,7 @@ def define_vaccine():
 if __name__ == "__main__":
     define_dx()
     define_rx()
-    define_enc()
+    define_enc_include()
+    define_enc_exclude()
     define_frailty()
     define_esrd()
