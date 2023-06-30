@@ -1,65 +1,99 @@
--- htn__bp: **all** Blood Pressure, even if there is no matching LOINC code
+-- htn__bp: **all** Blood Pressure values, even if there is no matching code
 
 create table htn__bp as
-with readings as
-(
-    select distinct status,
-        measure.valueQuantity,
-        measure.valueQuantity.value as mmHg,
-        measure_code,
-        measure.interpretation,
-        O.observation_ref,
-        O.encounter_ref,
-        O.subject_ref,
-        O.obs_week,
-        O.obs_month,
-        O.obs_year,
-        S.enc_class_code,
-        S.age_at_visit,
-        S.gender,
-        S.race_display
-    from core__observation_vital_signs as O
-        ,core__study_period S
-        ,UNNEST(component) t (measure)
-        ,UNNEST(measure.code.coding) t (measure_code)
-    where   measure.valueQuantity.system ='http://unitsofmeasure.org'
-    and     measure.valueQuantity.unit ='mmHg'
-    and     O.encounter_ref = S.encounter_ref
-),
-def_systolic as (select * from htn__define_bp_systolic),
-def_diastolic as (select * from htn__define_bp_diastolic)
+select distinct status,
+    measure.valueQuantity,
+    measure.valueQuantity.value as mmHg,
+    measure_code,
+    measure.interpretation,
+    O.observation_ref,
+    O.encounter_ref,
+    O.subject_ref,
+    O.obs_date,
+    O.obs_week,
+    O.obs_month,
+    O.obs_year,
+    S.enc_class_code,
+    S.age_at_visit,
+    S.gender,
+    S.race_display
+from core__observation_vital_signs as O
+    ,core__study_period S
+    ,UNNEST(component) t (measure)
+    ,UNNEST(measure.code.coding) t (measure_code)
+where   measure.valueQuantity.system ='http://unitsofmeasure.org'
+and     measure.valueQuantity.unit ='mmHg'
+and     O.encounter_ref = S.encounter_ref;
+
+create table htn__bp_panel as WITH
+define_panel as
+    (select * from htn__define_bp where component='panel'),
+define_component as
+    (select * from htn__define_bp where component!='panel')
 select distinct
-    case when def_systolic.code is not null then True else False end as systolic,
-    case when def_diastolic.code is not null then True else False end as diastolic,
-    R.*
-from readings R
-left join def_systolic  on def_systolic.code = measure_code.code
-left join def_diastolic on def_diastolic.code = measure_code.code
+    define_component.*,
+    component_code,
+    component_part.valueQuantity,
+    component_part.valueQuantity.value as mmHg,
+    O.obs_date,
+    O.obs_week,
+    O.obs_month,
+    O.obs_year,
+    S.enc_class_code,
+    S.age_at_visit,
+    S.gender,
+    S.race_display,
+    status,
+    O.observation_ref,
+    O.encounter_ref,
+    O.subject_ref
+from    define_panel,
+        define_component,
+        core__study_period as S,
+        core__observation_vital_signs as O,
+        UNNEST(O.component) t (component_part),
+        UNNEST(component_part.code.coding) t (component_code)
+where   define_panel.code = O.obs_code.code
+and     define_component.code = component_code.code
 ;
 
--- htn__bp_eval: **eval** Blood Pressure for systolic/diastolic LOINC codes
+-- SYSTOLIC blood pressure is the numerator "141" in a reading 141/89
+create table htn__bp_systolic as
+select htn__bp_panel.* from htn__bp_panel where component = 'systolic';
+
+-- DIASTOLIC blood pressure is the denom "89" in a reading 141/89
+create table htn__bp_diastolic as
+select htn__bp_panel.* from htn__bp_panel where component = 'diastolic';
 
 create table htn__bp_eval as
 select
-    enc_class_code,
-    mmHg,
-    systolic,
-    case when (systolic and mmHg < 90) then True else False end as systolic_low,
-    case when (systolic and mmHg >= 140) then True else False end as systolic_high,
-    diastolic,
-    case when (diastolic and mmHg < 60) then True else False end as diastolic_low,
-    case when (diastolic and mmHg >= 90) then True else False end as diastolic_high,
-    status,
-    obs_week,
-    obs_month,
-    obs_year,
-    age_at_visit,
-    gender,
-    race_display,
-    subject_ref,
-    encounter_ref,
-    observation_ref
-from htn__bp
-where systolic or diastolic
-order by systolic, diastolic, obs_week
+    systolic.enc_class_code,
+    concat(
+        cast(systolic.mmHg as varchar),
+        '/',
+        cast(diastolic.mmHg as varchar)) as bp_display,
+    systolic.mmHg as systolic_mmHg,
+    case when (systolic.mmHg >= 140) then True else False end as systolic_high,
+    case when (systolic.mmHg < 90) then True else False end as systolic_low,
+    diastolic.mmHg as diastolic_mmHg,
+    case when (diastolic.mmHg >= 90) then True else False end as diastolic_high,
+    case when (diastolic.mmHg < 60) then True else False end as diastolic_low,
+    systolic.obs_date,
+    systolic.obs_week,
+    systolic.obs_month,
+    systolic.obs_year,
+    systolic.age_at_visit,
+    systolic.gender,
+    systolic.race_display,
+    systolic.subject_ref,
+    systolic.encounter_ref,
+    systolic.observation_ref
+from
+    htn__bp_systolic as systolic,
+    htn__bp_diastolic as diastolic
+where
+    systolic.encounter_ref = diastolic.encounter_ref
+order by
+    systolic.subject_ref,
+    systolic.encounter_ref,
 ;
