@@ -142,7 +142,9 @@ def define_enc_exclude():
     define('define_enc_inpatient',
            ['valueset_enc_inpatient_acute_cpt_ncqa.json',
             'valueset_enc_inpatient_acute_snomed_acep.json',
-            'valueset_enc_inpatient_acute_snomed_ncqa.json'])
+            'valueset_enc_inpatient_acute_snomed_ncqa.json',
+            'valueset_enc_inpatient_non_acute_cpt_ncqa.json',
+            'valueset_enc_inpatient_non_acute_snomed_ncqa.json'])
 
     define('define_enc_hospice',
            ['valueset_enc_hospice_hcpcs.json',
