@@ -139,6 +139,18 @@ def define_enc_exclude():
     """
     :return:
     """
+    define('define_enc_edvisit',
+           ['valueset_enc_edvisit_cpt_ncqa.json',
+            'valueset_enc_edvisit_snomed_ncqa.json'])
+
+    define('define_enc_observation',
+           ['valueset_enc_observation_cpt_ncqa.json',
+            'valueset_enc_observation_snomed_tjc.json'])
+
+    define('define_enc_icu',
+           ['valueset_enc_icu_snomed_cdc.json',
+            'valueset_enc_icu_snomed_tjc.json'])
+
     define('define_enc_inpatient',
            ['valueset_enc_inpatient_acute_cpt_ncqa.json',
             'valueset_enc_inpatient_acute_snomed_acep.json',
@@ -146,28 +158,21 @@ def define_enc_exclude():
             'valueset_enc_inpatient_non_acute_cpt_ncqa.json',
             'valueset_enc_inpatient_non_acute_snomed_ncqa.json'])
 
+    define('define_enc_nursing',
+           ['valueset_enc_nursing_cpt_ncqa.json'])
+
     define('define_enc_hospice',
            ['valueset_enc_hospice_hcpcs.json',
             'valueset_enc_hospice_hcpcs_ncqa.json'])
-
-    define('define_enc_nursing',
-           ['valueset_enc_nursing_cpt_ncqa.json'])
 
     define('define_enc_palliative',
            ['valueset_enc_palliative_hcpcs_ncqa.json',
             'valueset_enc_palliative_snomed_ncqa.json'])
 
-    define('define_enc_observation',
-           ['valueset_enc_observation_cpt_ncqa.json',
-            'valueset_enc_observation_snomed_tjc.json'])
-
-    define('define_enc_edvisit',
-           ['valueset_enc_edvisit_cpt_ncqa.json',
-            'valueset_enc_edvisit_snomed_ncqa.json'])
-
-    define('define_enc_icu',
-           ['valueset_enc_icu_snomed_cdc.json',
-            'valueset_enc_icu_snomed_tjc.json'])
+def define_pregnancy():
+    define('define_pregnancy',
+           ['valueset_pregnancy_icd10_aha.json',
+            'valueset_pregnancy_snomed_aha.json'])
 
 def define_frailty():
     define('define_frailty',
@@ -205,5 +210,6 @@ if __name__ == "__main__":
     define_rx_exclude()
     define_enc_include()
     define_enc_exclude()
+    define_pregnancy()
     define_frailty()
     define_esrd()
