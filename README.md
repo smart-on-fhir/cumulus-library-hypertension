@@ -9,6 +9,49 @@ This definition attempts to "multi-solve" counting HTN cases for CDC and CMS use
   * [Controlling High Blood Pressure CMS Quality #236 (NQF 0018)](https://docs.google.com/spreadsheets/d/1UTxg-MvAf0xMBI8dAw6SEF1cQduZqC330R-0MOAWli4/edit#gid=1986332053)
   
 -----
+**COUNT TABLES**
+
+Count number of patients per month matching criteria
+* _htn__count_bp_month_ : BP (blood pressure) measures
+* _htn__count_dx_month_ : HTN diagnosis codes 
+* _htn__count_rx_month_ : HTN blood pressure control meds
+
+
+
+| **htn__count_bp_month** | [Blood Pressure Panel](http://hl7.org/fhir/us/vitals/STU1/StructureDefinition-blood-pressure-panel.html)                         |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| cnt                     | count number of patients                                                                                                         |
+| obs_month               | Month of BP observation                                                                                                          |
+| hypertension            | BP is 140/90 or higher (true or false)                                                                                           |           | 
+| hypotension             | BP is 90/60  or lower (true or false)                                                                                            |
+| enc_class_code          | [Encounter class](https://terminology.hl7.org/5.1.0/ValueSet-encounter-class.html) ambulatory, emergency, impatient, observation | 
+| gender                  | [female or male sex](http://hl7.org/fhir/ValueSet/administrative-gender)                                                         |
+| age_at_visit            | patient age at time of visit                                                                                                     |
+| race_display            | [CDC R5 race](http://hl7.org/fhir/us/core/StructureDefinition/us-core-race)                                                      |
+| ethnicity_display       | [Hispanic or Latino](http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity)                                          |
+
+| **htn__count_dx_month** | Hypertension diagnosis (ICD10-CM or SNOMED-CT)                                                                                   |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| cnt                     | count number of patients                                                                                                         |
+| cond_month              | Month of HTN diagnosis                                                                                                           |
+| cond_display            | Display the label of HTN diagnosis                                                                                               |
+| cond_system_display     | SNOMED-CT or ICD-10-CM                                                                                                           |                                                                                                          |
+| enc_class_code          | [Encounter class](https://terminology.hl7.org/5.1.0/ValueSet-encounter-class.html) ambulatory, emergency, impatient, observation | 
+| gender                  | female or male sex                                                                                                               |
+| age_at_visit            | patient age at time of visit                                                                                                     |
+| race_display            | CDC R5 code                                                                                                                      |
+| ethnicity_display       | Hispanic or Latino                                                                                                               |
+
+
+| **htn__count_rx_month** | Blood Pressure Medications                                                                                 |
+|-------------------------|------------------------------------------------------------------------------------------------------------|
+| cnt                     | count number of patients                                                                                   |
+| authoredon_month        | Month of medication request                                                                                |
+| rx_display              | Display RXNORM drug label                                                                                  |
+| rx_category_code        | [inpatient, outpatient, or community](https://hl7.org/fhir/valueset-medicationrequest-admin-location.html) |                                                                                                          |
+
+
+-----
 
 **DIAGNOSIS**
 
