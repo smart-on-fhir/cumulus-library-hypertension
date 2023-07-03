@@ -35,3 +35,22 @@ CREATE or replace VIEW htn__count_dx_month AS
     from powerset 
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
+
+-- ###########################################################
+CREATE or replace VIEW htn__count_rx_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , authoredon_month, category_code, rx_display        
+        FROM htn__rx
+        group by CUBE
+        ( authoredon_month, category_code, rx_display )
+    )
+    select
+          cnt_subject as cnt 
+        , authoredon_month, category_code, rx_display
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ORDER BY cnt desc;

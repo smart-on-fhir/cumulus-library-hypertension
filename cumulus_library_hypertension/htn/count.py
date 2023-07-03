@@ -22,10 +22,19 @@ def count_bp(duration='month'):
 def count_dx(duration='month'):
     view_name = table('count_dx', duration)
     from_table = table('dx')
-    cols = [f'cond_{duration}', 'enc_class_code',
+    cols = [f'cond_{duration}',
+            'enc_class_code',
             'gender', 'age_at_visit', 'race_display', 'ethnicity_display',
             'cond_display', 'cond_system_display']
     return counts.count_patient(view_name, from_table, cols)
+
+def count_rx(duration='month'):
+    view_name = table('count_rx', duration)
+    from_table = table('rx')
+    cols = [f'authoredon_{duration}',
+            'category_code', 'rx_display']
+    return counts.count_patient(view_name, from_table, cols)
+
 
 def concat_view_sql(create_view_list: List[str]) -> str:
     """
@@ -53,4 +62,5 @@ if __name__ == '__main__':
     write_view_sql([
         count_bp('month'),
         count_dx('month'),
+        count_rx('month')
     ])
