@@ -54,5 +54,6 @@ def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
 
 if __name__ == '__main__':
     write_view_sql([
-        count_bp_eval('month')
+        count_bp_eval('month'),
+        count_bp('month'),
     ])

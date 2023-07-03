@@ -12,6 +12,7 @@ file_names = [
 
     # Medication
     "define_rx.sql",
+    "define_rx_exclude.sql",
 
     # Encounter Types
     "define_enc_home.sql",

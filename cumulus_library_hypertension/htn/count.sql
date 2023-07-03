@@ -16,3 +16,22 @@ CREATE or replace VIEW htn__count_bp_eval_month AS
     from powerset 
     WHERE cnt_subject >= 10 
     ORDER BY cnt desc;
+
+-- ###########################################################
+CREATE or replace VIEW htn__count_bp_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        , count(distinct encounter_ref)   as cnt_encounter
+        , obs_month, enc_class_code, gender, age_at_visit, systolic_high, systolic_low, diastolic_high, diastolic_low        
+        FROM htn__bp
+        group by CUBE
+        ( obs_month, enc_class_code, gender, age_at_visit, systolic_high, systolic_low, diastolic_high, diastolic_low )
+    )
+    select
+          cnt_encounter  as cnt 
+        , obs_month, enc_class_code, gender, age_at_visit, systolic_high, systolic_low, diastolic_high, diastolic_low
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ORDER BY cnt desc;
