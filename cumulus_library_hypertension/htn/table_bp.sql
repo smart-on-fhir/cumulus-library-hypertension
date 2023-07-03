@@ -106,7 +106,8 @@ select distinct
     S.enc_class_code,
     S.age_at_visit,
     S.gender,
-    S.race_display
+    S.race_display,
+    S.ethnicity_display
 from    htn__bp_eval BP,
         core__study_period as S
 where   BP.encounter_ref = S.encounter_ref
