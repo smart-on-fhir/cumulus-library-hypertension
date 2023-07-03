@@ -70,6 +70,8 @@ select
     diastolic.mmHg as diastolic_mmHg,
     case when (diastolic.mmHg >= 90) then True else False end as diastolic_high,
     case when (diastolic.mmHg < 60) then True else False end as diastolic_low,
+    case when ((systolic.mmHg >= 140) or (diastolic.mmHg >= 90)) then True else False end as hypertension,
+    case when ((systolic.mmHg < 90) or (diastolic.mmHg < 60)) then True else False end as hypotension,
     systolic.obs_date,
     systolic.obs_week,
     systolic.obs_month,
@@ -89,6 +91,9 @@ where
 
 create table htn__bp as
 select distinct
+    BP.bp_display,
+    BP.hypertension,
+    BP.hypotension,
     BP.systolic_high,
     BP.systolic_low,
     BP.diastolic_high,

@@ -32,5 +32,6 @@ file_names = [
 
 [export_config]
 export_list = [
+    "htn__count_bp_month",
     "htn__count_dx",
 ]

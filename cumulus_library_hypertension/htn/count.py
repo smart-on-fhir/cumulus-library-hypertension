@@ -9,15 +9,6 @@ def table(tablename: str, duration=None) -> str:
     else: 
         return f'{STUDY_PREFIX}__{tablename}'
 
-def count_bp_eval(duration='month'):
-    view_name = table('count_bp_eval', duration)
-    from_table = table('bp_eval')
-    cols = [f'obs_{duration}',
-            'systolic_high', 'systolic_low',
-            'diastolic_high', 'diastolic_low']
-
-    return counts.count_encounter(view_name, from_table, cols)
-
 def count_bp(duration='month'):
     view_name = table('count_bp', duration)
     from_table = table('bp')
@@ -25,10 +16,10 @@ def count_bp(duration='month'):
             'enc_class_code',
             'gender',
             'age_at_visit',
-            'systolic_high', 'systolic_low',
-            'diastolic_high', 'diastolic_low']
+            'hypertension',
+            'hypotension']
 
-    return counts.count_encounter(view_name, from_table, cols)
+    return counts.count_patient(view_name, from_table, cols)
 
 def concat_view_sql(create_view_list: List[str]) -> str:
     """
@@ -54,6 +45,5 @@ def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
 
 if __name__ == '__main__':
     write_view_sql([
-        count_bp_eval('month'),
         count_bp('month'),
     ])
