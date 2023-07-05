@@ -13,8 +13,7 @@ def count_bp(duration=None):
     view_name = table('count_bp', duration)
     from_table = table('bp')
     cols = ['hypertension', 'hypotension', 'enc_class_code',
-            'gender', 'age_at_visit', 'race_display', 'ethnicity_display',
-            'hypertension', 'hypotension']
+            'gender', 'age_at_visit', 'race_display', 'ethnicity_display']
 
     if duration:
         cols.append(f'obs_{duration}')
@@ -33,14 +32,21 @@ def count_dx(duration='month'):
 def count_rx(duration='month'):
     view_name = table('count_rx', duration)
     from_table = table('rx')
-    cols = [f'authoredon_{duration}',
-            'category_code', 'rx_display']
+    cols = ['category_code', 'rx_display']
+
+    if duration:
+        cols.append(f'authoredon_{duration}')
+
     return counts.count_patient(view_name, from_table, cols)
 
-def count_procedure():
-    view_name = table('count_procedure')
+def count_procedure(duration=None):
+    view_name = table('count_procedure', duration)
     from_table = table('procedure')
-    cols = ['proc_display', 'proc_system']
+    cols = ['enc_class_display', 'proc_display', 'proc_system']
+
+    if duration:
+        cols.append(f'enc_start_{duration}')
+
     return counts.count_encounter(view_name, from_table, cols)
 
 def concat_view_sql(create_view_list: List[str]) -> str:
@@ -69,6 +75,7 @@ if __name__ == '__main__':
         count_bp(),
         count_bp('month'),
         count_dx('month'),
-        # count_rx('month'), TODO requires support for FHIR MedicationRequest
-        # count_procedure()  TODO requires support for FHIR Procedure
+        # count_rx('month'),          # TODO requires support for FHIR MedicationRequest
+        # count_procedure(),          # TODO requires support for FHIR Procedure
+        # count_procedure('month'),   # TODO requires support for FHIR Procedure
     ])
