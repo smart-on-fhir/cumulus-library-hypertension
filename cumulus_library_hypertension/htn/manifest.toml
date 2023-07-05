@@ -31,11 +31,15 @@ file_names = [
     # health status
     "define_esrd.sql",
     "define_frailty.sql",
-    "define_pregnancy.sql"
+    "define_pregnancy.sql",
+
+    # Count
+    "count.sql"
 ]
 
 [export_config]
 export_list = [
+    "htn__count_bp",
     "htn__count_bp_month",
     "htn__count_dx_month",
     # "htn__count_rx_month" for sites that support MedicationRequest
