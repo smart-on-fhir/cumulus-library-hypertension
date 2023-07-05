@@ -15,7 +15,7 @@ CREATE or replace VIEW htn__count_bp AS
         , hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display
     from powerset 
     WHERE cnt_subject >= 10 
-    ORDER BY cnt desc;
+    ;
 
 -- ###########################################################
 CREATE or replace VIEW htn__count_bp_month AS 
@@ -34,7 +34,7 @@ CREATE or replace VIEW htn__count_bp_month AS
         , hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, obs_month
     from powerset 
     WHERE cnt_subject >= 10 
-    ORDER BY cnt desc;
+    ;
 
 -- ###########################################################
 CREATE or replace VIEW htn__count_dx_month AS 
@@ -53,9 +53,9 @@ CREATE or replace VIEW htn__count_dx_month AS
         , cond_month, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, cond_display, cond_system_display
     from powerset 
     WHERE cnt_subject >= 10 
-    ORDER BY cnt desc;
+    ;
 
----- ###########################################################
+-- ###########################################################
 --CREATE or replace VIEW htn__count_rx_month AS
 --    with powerset as
 --    (
@@ -72,7 +72,7 @@ CREATE or replace VIEW htn__count_dx_month AS
 --        , category_code, rx_display, authoredon_month
 --    from powerset
 --    WHERE cnt_subject >= 10
---    ORDER BY cnt desc;
+--    ;
 
 -- ###########################################################
 --CREATE or replace VIEW htn__count_procedure AS
@@ -91,7 +91,7 @@ CREATE or replace VIEW htn__count_dx_month AS
 --        , enc_class_display, proc_display, proc_system
 --    from powerset
 --    WHERE cnt_subject >= 10
---    ORDER BY cnt desc;
+--    ;
 
 -- ###########################################################
 --CREATE or replace VIEW htn__count_procedure_month AS
@@ -110,4 +110,4 @@ CREATE or replace VIEW htn__count_dx_month AS
 --        , enc_class_display, proc_display, proc_system, enc_start_month
 --    from powerset
 --    WHERE cnt_subject >= 10
---    ORDER BY cnt desc;
+--    ;

@@ -66,8 +66,9 @@ def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
     :param view_list_sql: SQL prepared statements
     :param filename: path to output file, default 'count.sql' in PWD
     """
+    sql_optimizer = concat_view_sql(view_list_sql).replace('ORDER BY cnt desc', '')
     with open(filename, 'w') as fout:
-        fout.write(concat_view_sql(view_list_sql))
+        fout.write(sql_optimizer)
 
 
 if __name__ == '__main__':
