@@ -1,4 +1,10 @@
-drop table if exists htn__dx;
+-- ###########################################################################
+-- Hypertension diagnosis
+--
+-- htn__dx = *without* Encounter
+-- htn__dx_period = *with* Encounter (age_at_visit,class,type,service)
+--
+-- ###########################################################################
 
 create table htn__dx as
 SELECT DISTINCT

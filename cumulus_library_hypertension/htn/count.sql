@@ -244,3 +244,60 @@ CREATE TABLE htn__count_dx_period_date AS
     from powerset 
     WHERE cnt_subject >= 10 
     ;
+
+-- ###########################################################
+CREATE TABLE htn__count_prevalence_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_month        
+        FROM htn__prevalence
+        group by CUBE
+        ( hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_month )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_month
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_prevalence_week AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_week        
+        FROM htn__prevalence
+        group by CUBE
+        ( hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_week )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_week
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_prevalence_date AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_date        
+        FROM htn__prevalence
+        group by CUBE
+        ( hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_date )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_date
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;

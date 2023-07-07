@@ -67,6 +67,23 @@ def count_dx_period(duration=None):
         cols.append(f'cond_{duration}')
 
     return counts.count_patient(view_name, from_table, cols)
+
+def count_prevalence(duration='month'):
+    view_name = table('count_prevalence', duration)
+    from_table = table('prevalence')
+    cols = ['hypertension',
+            'hypertension_lab',
+            'hypertension_dx',
+            'age_at_visit',
+            'gender',
+            'race_display',
+            'ethnicity_display']
+
+    if duration:
+        cols.append(f'start_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
 def count_rx(duration='month'):
     view_name = table('count_rx', duration)
     from_table = table('rx')
@@ -132,4 +149,7 @@ if __name__ == '__main__':
         count_dx_period('month'),
         count_dx_period('week'),
         count_dx_period('date'),
+
+        count_prevalence('month'),
+        count_prevalence('week'),
     ])
