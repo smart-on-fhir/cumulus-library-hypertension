@@ -102,7 +102,7 @@ def count_comorbidity(duration=None):
 
     return counts.count_patient(view_name, from_table, cols)
 
-def count_comorbidity_period(duration='month'):
+def count_comorbidity_period(duration=None):
     view_name = table('count_comorbidity_period', duration)
     from_table = table('comorbidity_period')
     cols = ['comorbidity_category_display',
