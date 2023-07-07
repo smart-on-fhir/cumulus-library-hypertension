@@ -189,14 +189,14 @@ CREATE TABLE htn__count_dx_date AS
     ;
 
 -- ###########################################################
-CREATE TABLE htn__count_dx_month AS 
+CREATE TABLE htn__count_dx_period_month AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         
         , category_display, cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_month        
-        FROM htn__dx
+        FROM htn__dx_period
         group by CUBE
         ( category_display, cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_month )
     )
@@ -208,14 +208,14 @@ CREATE TABLE htn__count_dx_month AS
     ;
 
 -- ###########################################################
-CREATE TABLE htn__count_dx_week AS 
+CREATE TABLE htn__count_dx_period_week AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         
         , category_display, cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_week        
-        FROM htn__dx
+        FROM htn__dx_period
         group by CUBE
         ( category_display, cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_week )
     )
@@ -227,14 +227,14 @@ CREATE TABLE htn__count_dx_week AS
     ;
 
 -- ###########################################################
-CREATE TABLE htn__count_dx_date AS 
+CREATE TABLE htn__count_dx_period_date AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         
         , category_display, cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_date        
-        FROM htn__dx
+        FROM htn__dx_period
         group by CUBE
         ( category_display, cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_date )
     )

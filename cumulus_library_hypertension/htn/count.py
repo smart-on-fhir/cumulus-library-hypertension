@@ -51,7 +51,7 @@ def count_dx(duration=None):
     return counts.count_patient(view_name, from_table, cols)
 
 def count_dx_period(duration=None):
-    view_name = table('count_dx', duration)
+    view_name = table('count_dx_period', duration)
     from_table = table('dx_period')
     cols = ['category_display',
             'cond_display',
