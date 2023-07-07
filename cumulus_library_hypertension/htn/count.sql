@@ -1,18 +1,37 @@
 -- ###########################################################
+CREATE TABLE htn__count_study_period AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        , count(distinct encounter_ref)   as cnt_encounter
+        , enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
+        FROM htn__study_period
+        group by CUBE
+        ( enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
+    )
+    select
+          cnt_encounter  as cnt 
+        , enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
 CREATE TABLE htn__count_study_period_month AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         , count(distinct encounter_ref)   as cnt_encounter
-        , start_month, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
+        , enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, start_month        
         FROM htn__study_period
         group by CUBE
-        ( start_month, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
+        ( enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, start_month )
     )
     select
           cnt_encounter  as cnt 
-        , start_month, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
+        , enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, start_month
     from powerset 
     WHERE cnt_subject >= 10 
     ;
@@ -24,33 +43,14 @@ CREATE TABLE htn__count_study_period_week AS
         select
         count(distinct subject_ref)   as cnt_subject
         , count(distinct encounter_ref)   as cnt_encounter
-        , start_week, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
+        , enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, start_week        
         FROM htn__study_period
         group by CUBE
-        ( start_week, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
+        ( enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, start_week )
     )
     select
           cnt_encounter  as cnt 
-        , start_week, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
-    from powerset 
-    WHERE cnt_subject >= 10 
-    ;
-
--- ###########################################################
-CREATE TABLE htn__count_study_period_date AS 
-    with powerset as
-    (
-        select
-        count(distinct subject_ref)   as cnt_subject
-        , count(distinct encounter_ref)   as cnt_encounter
-        , start_date, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
-        FROM htn__study_period
-        group by CUBE
-        ( start_date, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
-    )
-    select
-          cnt_encounter  as cnt 
-        , start_date, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
+        , enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, start_week
     from powerset 
     WHERE cnt_subject >= 10 
     ;
@@ -252,14 +252,14 @@ CREATE TABLE htn__count_prevalence_month AS
         select
         count(distinct subject_ref)   as cnt_subject
         
-        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_month        
+        , hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, start_month        
         FROM htn__prevalence
         group by CUBE
-        ( hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_month )
+        ( hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, start_month )
     )
     select
           cnt_subject as cnt 
-        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_month
+        , hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, start_month
     from powerset 
     WHERE cnt_subject >= 10 
     ;
@@ -271,33 +271,128 @@ CREATE TABLE htn__count_prevalence_week AS
         select
         count(distinct subject_ref)   as cnt_subject
         
-        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_week        
+        , hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, start_week        
         FROM htn__prevalence
         group by CUBE
-        ( hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_week )
+        ( hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, start_week )
     )
     select
           cnt_subject as cnt 
-        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_week
+        , hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, start_week
     from powerset 
     WHERE cnt_subject >= 10 
     ;
 
 -- ###########################################################
-CREATE TABLE htn__count_prevalence_date AS 
+CREATE TABLE htn__count_comorbidity AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         
-        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_date        
-        FROM htn__prevalence
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display        
+        FROM htn__comorbidity
         group by CUBE
-        ( hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_date )
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display )
     )
     select
           cnt_subject as cnt 
-        , hypertension_lab, hypertension_dx, hypertension, age_at_visit, gender, race_display, ethnicity_display, start_date
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_comorbidity_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display, comorbidity_month        
+        FROM htn__comorbidity
+        group by CUBE
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display, comorbidity_month )
+    )
+    select
+          cnt_subject as cnt 
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display, comorbidity_month
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_comorbidity_week AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display, comorbidity_week        
+        FROM htn__comorbidity
+        group by CUBE
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display, comorbidity_week )
+    )
+    select
+          cnt_subject as cnt 
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, gender, race_display, ethnicity_display, comorbidity_week
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_comorbidity_period_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month        
+        FROM htn__comorbidity_period
+        group by CUBE
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month )
+    )
+    select
+          cnt_subject as cnt 
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_comorbidity_period_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month        
+        FROM htn__comorbidity_period
+        group by CUBE
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month )
+    )
+    select
+          cnt_subject as cnt 
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_comorbidity_period_week AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_week        
+        FROM htn__comorbidity_period
+        group by CUBE
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_week )
+    )
+    select
+          cnt_subject as cnt 
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_week
     from powerset 
     WHERE cnt_subject >= 10 
     ;
