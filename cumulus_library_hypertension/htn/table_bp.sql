@@ -98,18 +98,21 @@ select distinct
     BP.systolic_low,
     BP.diastolic_high,
     BP.diastolic_low,
+    BP.obs_date,
     BP.obs_week,
     BP.obs_month,
     BP.subject_ref,
     BP.encounter_ref,
     BP.observation_ref,
     S.enc_class_code,
+    S.enc_class_display,
+    S.enc_type_display,
     S.age_at_visit,
     S.gender,
     S.race_display,
     S.ethnicity_display
 from    htn__bp_eval BP,
-        core__study_period as S
+        htn__study_period as S
 where   BP.encounter_ref = S.encounter_ref
 order by BP.subject_ref, BP.encounter_ref
 ;

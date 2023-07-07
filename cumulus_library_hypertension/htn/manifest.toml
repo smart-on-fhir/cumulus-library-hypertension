@@ -2,6 +2,9 @@ study_prefix = "htn"
 
 [sql_config]
 file_names = [
+    # study period
+    "study_period.sql",
+
     # blood pressure
     "define_bp.sql",
     "table_bp.sql",
@@ -12,36 +15,41 @@ file_names = [
     "define_dx_existing.sql",
     "table_dx.sql",
 
-    # Medication
-    "define_rx.sql",
-    "define_rx_exclude.sql",
-    # "table_rx.sql", for sites that support MedicationRequest
-
-    # Encounter Types
-    "define_enc_outpatient.sql",
-    "define_enc_home.sql",
-    "define_enc_office.sql",
-    "define_enc_wellness.sql",
-    "define_enc_preventive.sql",
-    "define_enc_nursing.sql",
-    "define_enc_hospice.sql",
-    "define_enc_inpatient.sql",
-    "define_enc_palliative.sql",
-
-    # health status
-    "define_esrd.sql",
-    "define_frailty.sql",
-    "define_pregnancy.sql",
-
     # Count
     "count.sql"
+
+    # Medication
+#    "define_rx.sql",
+#    "define_rx_exclude.sql",
+#    "table_rx.sql", # for sites that support MedicationRequest
+
+    # Encounter Types
+#    "define_enc_outpatient.sql",
+#    "define_enc_home.sql",
+#    "define_enc_office.sql",
+#    "define_enc_wellness.sql",
+#    "define_enc_preventive.sql",
+#    "define_enc_nursing.sql",
+#    "define_enc_hospice.sql",
+#    "define_enc_inpatient.sql",
+#    "define_enc_palliative.sql",
+
+    # health status
+#    "define_esrd.sql",
+#    "define_frailty.sql",
+#    "define_pregnancy.sql",
 ]
 
 [export_config]
 export_list = [
+    "htn__count_study_period_week",
+    "htn__count_study_period_date",
     "htn__count_bp",
     "htn__count_bp_month",
+    "htn__count_bp_week",
+    "htn__count_bp_date",
     "htn__count_dx_month",
-    # "htn__count_rx_month" for sites that support MedicationRequest
+    "htn__count_dx_week",
+    "htn__count_dx_date",
 ]
 

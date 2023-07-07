@@ -1,113 +1,170 @@
 -- ###########################################################
-CREATE or replace VIEW htn__count_bp AS 
+CREATE TABLE htn__count_study_period_week AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
-        
-        , hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display        
-        FROM htn__bp
+        , count(distinct encounter_ref)   as cnt_encounter
+        , start_week, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
+        FROM htn__study_period
         group by CUBE
-        ( hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display )
+        ( start_week, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
     )
     select
-          cnt_subject as cnt 
-        , hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display
+          cnt_encounter  as cnt 
+        , start_week, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
     from powerset 
     WHERE cnt_subject >= 10 
     ;
 
 -- ###########################################################
-CREATE or replace VIEW htn__count_bp_month AS 
+CREATE TABLE htn__count_study_period_date AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
-        
-        , hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, obs_month        
-        FROM htn__bp
+        , count(distinct encounter_ref)   as cnt_encounter
+        , start_date, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
+        FROM htn__study_period
         group by CUBE
-        ( hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, obs_month )
+        ( start_date, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
     )
     select
-          cnt_subject as cnt 
-        , hypertension, hypotension, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, obs_month
+          cnt_encounter  as cnt 
+        , start_date, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
     from powerset 
     WHERE cnt_subject >= 10 
     ;
 
 -- ###########################################################
-CREATE or replace VIEW htn__count_dx_month AS 
+CREATE TABLE htn__count_bp AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         
-        , cond_month, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, cond_display, cond_system_display        
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display        
+        FROM htn__bp
+        group by CUBE
+        ( hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_bp_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_month        
+        FROM htn__bp
+        group by CUBE
+        ( hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_month )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_month
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_bp_week AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_week        
+        FROM htn__bp
+        group by CUBE
+        ( hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_week )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_week
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_bp_date AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_date        
+        FROM htn__bp
+        group by CUBE
+        ( hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_date )
+    )
+    select
+          cnt_subject as cnt 
+        , hypertension, hypotension, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, obs_date
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_dx_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_month        
         FROM htn__dx
         group by CUBE
-        ( cond_month, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, cond_display, cond_system_display )
+        ( cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_month )
     )
     select
           cnt_subject as cnt 
-        , cond_month, enc_class_code, gender, age_at_visit, race_display, ethnicity_display, cond_display, cond_system_display
+        , cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_month
     from powerset 
     WHERE cnt_subject >= 10 
     ;
 
 -- ###########################################################
---CREATE or replace VIEW htn__count_rx_month AS
---    with powerset as
---    (
---        select
---        count(distinct subject_ref)   as cnt_subject
---
---        , category_code, rx_display, authoredon_month
---        FROM htn__rx
---        group by CUBE
---        ( category_code, rx_display, authoredon_month )
---    )
---    select
---          cnt_subject as cnt
---        , category_code, rx_display, authoredon_month
---    from powerset
---    WHERE cnt_subject >= 10
---    ;
+CREATE TABLE htn__count_dx_week AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_week        
+        FROM htn__dx
+        group by CUBE
+        ( cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_week )
+    )
+    select
+          cnt_subject as cnt 
+        , cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_week
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
 
 -- ###########################################################
---CREATE or replace VIEW htn__count_procedure AS
---    with powerset as
---    (
---        select
---        count(distinct subject_ref)   as cnt_subject
---        , count(distinct encounter_ref)   as cnt_encounter
---        , enc_class_display, proc_display, proc_system
---        FROM htn__procedure
---        group by CUBE
---        ( enc_class_display, proc_display, proc_system )
---    )
---    select
---          cnt_encounter  as cnt
---        , enc_class_display, proc_display, proc_system
---    from powerset
---    WHERE cnt_subject >= 10
---    ;
-
--- ###########################################################
---CREATE or replace VIEW htn__count_procedure_month AS
---    with powerset as
---    (
---        select
---        count(distinct subject_ref)   as cnt_subject
---        , count(distinct encounter_ref)   as cnt_encounter
---        , enc_class_display, proc_display, proc_system, enc_start_month
---        FROM htn__procedure
---        group by CUBE
---        ( enc_class_display, proc_display, proc_system, enc_start_month )
---    )
---    select
---          cnt_encounter  as cnt
---        , enc_class_display, proc_display, proc_system, enc_start_month
---    from powerset
---    WHERE cnt_subject >= 10
---    ;
+CREATE TABLE htn__count_dx_date AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_date        
+        FROM htn__dx
+        group by CUBE
+        ( cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_date )
+    )
+    select
+          cnt_subject as cnt 
+        , cond_display, cond_system_display, enc_class_display, enc_type_display, age_at_visit, gender, race_display, ethnicity_display, cond_date
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
