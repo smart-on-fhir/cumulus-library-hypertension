@@ -53,5 +53,13 @@ export_list = [
     "htn__count_dx_month",
     "htn__count_dx_week",
     "htn__count_dx_date",
+    "htn__count_prevalence_month",
+    "htn__count_prevalence_week",
+    "htn__count_comorbidity",
+    "htn__count_comorbidity_month",
+    "htn__count_comorbidity_week",
+    "htn__count_comorbidity_period",
+    "htn__count_comorbidity_period_month",
+    "htn__count_comorbidity_period_week",
 ]
 
