@@ -341,20 +341,20 @@ CREATE TABLE htn__count_comorbidity_week AS
     ;
 
 -- ###########################################################
-CREATE TABLE htn__count_comorbidity_period_month AS 
+CREATE TABLE htn__count_comorbidity_period AS 
     with powerset as
     (
         select
         count(distinct subject_ref)   as cnt_subject
         
-        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month        
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display        
         FROM htn__comorbidity_period
         group by CUBE
-        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month )
+        ( comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display )
     )
     select
           cnt_subject as cnt 
-        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display, start_month
+        , comorbidity_category_display, comorbidity_system_display, comorbidity_display, enc_class_display, age_at_visit, gender, race_display, ethnicity_display
     from powerset 
     WHERE cnt_subject >= 10 
     ;
