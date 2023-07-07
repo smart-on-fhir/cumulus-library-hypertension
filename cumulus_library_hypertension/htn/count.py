@@ -42,7 +42,19 @@ def count_bp(duration=None):
 def count_dx(duration=None):
     view_name = table('count_dx', duration)
     from_table = table('dx')
-    cols = ['cond_display',
+    cols = ['category_display',
+            'cond_display',
+            'cond_system_display']
+    if duration:
+        cols.append(f'cond_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
+def count_dx_period(duration=None):
+    view_name = table('count_dx', duration)
+    from_table = table('dx_period')
+    cols = ['category_display',
+            'cond_display',
             'cond_system_display',
             'enc_class_display',
             'enc_type_display',
@@ -55,7 +67,6 @@ def count_dx(duration=None):
         cols.append(f'cond_{duration}')
 
     return counts.count_patient(view_name, from_table, cols)
-
 def count_rx(duration='month'):
     view_name = table('count_rx', duration)
     from_table = table('rx')
@@ -96,13 +107,13 @@ def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
     sql_optimizer = concat_view_sql(view_list_sql)
     sql_optimizer = sql_optimizer.replace("ORDER BY cnt desc", "")
     sql_optimizer = sql_optimizer.replace("CREATE or replace VIEW", 'CREATE TABLE')
-
     with open(filename, 'w') as fout:
         fout.write(sql_optimizer)
 
 
 if __name__ == '__main__':
     write_view_sql([
+        count_study_period('month'),
         count_study_period('week'),
         count_study_period('date'),
 
@@ -112,12 +123,13 @@ if __name__ == '__main__':
         count_bp('week'),
         count_bp('date'),
 
-        # FHIR Condition
+        # FHIR Condition with FHIR Encounter
         count_dx('month'),
         count_dx('week'),
         count_dx('date'),
 
-        # count_rx('month'),          # TODO requires support for FHIR MedicationRequest
-        # count_procedure(),          # TODO requires support for FHIR Procedure
-        # count_procedure('month'),   # TODO requires support for FHIR Procedure
+        # FHIR Condition with FHIR Encounter
+        count_dx_period('month'),
+        count_dx_period('week'),
+        count_dx_period('date'),
     ])
