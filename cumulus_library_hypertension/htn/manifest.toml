@@ -14,6 +14,8 @@ file_names = [
     "define_dx_essential.sql",
     "define_dx_existing.sql",
     "table_dx.sql",
+    "table_prevalence.sql",
+    "table_comorbidity.sql",
 
     # Count
     "count.sql"
@@ -43,7 +45,7 @@ file_names = [
 [export_config]
 export_list = [
     "htn__count_study_period_week",
-    "htn__count_study_period_date",
+    # "htn__count_study_period_date",
     "htn__count_bp",
     "htn__count_bp_month",
     "htn__count_bp_week",
@@ -51,5 +53,13 @@ export_list = [
     "htn__count_dx_month",
     "htn__count_dx_week",
     "htn__count_dx_date",
+    "htn__count_prevalence_month",
+    "htn__count_prevalence_week",
+    "htn__count_comorbidity",
+    "htn__count_comorbidity_month",
+    "htn__count_comorbidity_week",
+    "htn__count_comorbidity_period",
+    "htn__count_comorbidity_period_month",
+    "htn__count_comorbidity_period_week",
 ]
 

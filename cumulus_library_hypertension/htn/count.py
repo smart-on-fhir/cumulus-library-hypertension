@@ -9,16 +9,18 @@ def table(tablename: str, duration=None) -> str:
     else: 
         return f'{STUDY_PREFIX}__{tablename}'
 
-def count_study_period(duration='month'):
+def count_study_period(duration=None):
     view_name = table('count_study_period', duration)
     from_table = table('study_period')
-    cols = [f'start_{duration}',
-            'enc_class_display',
+    cols = ['enc_class_display',
             'enc_type_display',
             'age_at_visit',
             'gender',
             'race_display',
             'ethnicity_display']
+
+    if duration:
+        cols.append(f'start_{duration}')
 
     return counts.count_encounter(view_name, from_table, cols)
 
@@ -45,6 +47,7 @@ def count_dx(duration=None):
     cols = ['category_display',
             'cond_display',
             'cond_system_display']
+
     if duration:
         cols.append(f'cond_{duration}')
 
@@ -67,6 +70,55 @@ def count_dx_period(duration=None):
         cols.append(f'cond_{duration}')
 
     return counts.count_patient(view_name, from_table, cols)
+
+def count_prevalence(duration='month'):
+    view_name = table('count_prevalence', duration)
+    from_table = table('prevalence')
+    cols = ['hypertension',
+            'hypertension_lab',
+            'hypertension_dx',
+            'age_at_visit',
+            'gender',
+            'race_display',
+            'ethnicity_display']
+
+    if duration:
+        cols.append(f'start_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
+def count_comorbidity(duration=None):
+    view_name = table('count_comorbidity', duration)
+    from_table = table('comorbidity')
+    cols = ['comorbidity_category_display',
+            'comorbidity_system_display',
+            'comorbidity_display',
+            'gender',
+            'race_display',
+            'ethnicity_display']
+
+    if duration:
+        cols.append(f'comorbidity_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
+def count_comorbidity_period(duration=None):
+    view_name = table('count_comorbidity_period', duration)
+    from_table = table('comorbidity_period')
+    cols = ['comorbidity_category_display',
+            'comorbidity_system_display',
+            'comorbidity_display',
+            'enc_class_display',
+            'age_at_visit',
+            'gender',
+            'race_display',
+            'ethnicity_display']
+
+    if duration:
+        cols.append(f'start_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
 def count_rx(duration='month'):
     view_name = table('count_rx', duration)
     from_table = table('rx')
@@ -113,9 +165,10 @@ def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
 
 if __name__ == '__main__':
     write_view_sql([
+
+        count_study_period(),
         count_study_period('month'),
         count_study_period('week'),
-        count_study_period('date'),
 
         # FHIR Observation
         count_bp(),
@@ -132,4 +185,15 @@ if __name__ == '__main__':
         count_dx_period('month'),
         count_dx_period('week'),
         count_dx_period('date'),
+
+        count_prevalence('month'),
+        count_prevalence('week'),
+
+        count_comorbidity(),
+        count_comorbidity('month'),
+        count_comorbidity('week'),
+
+        count_comorbidity_period(),
+        count_comorbidity_period('month'),
+        count_comorbidity_period('week'),
     ])
