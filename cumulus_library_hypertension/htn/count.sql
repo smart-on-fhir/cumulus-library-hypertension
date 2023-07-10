@@ -396,3 +396,41 @@ CREATE TABLE htn__count_comorbidity_period_week AS
     from powerset 
     WHERE cnt_subject >= 10 
     ;
+
+-- ###########################################################
+CREATE TABLE htn__count_rx AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , category_code, rx_display        
+        FROM htn__rx
+        group by CUBE
+        ( category_code, rx_display )
+    )
+    select
+          cnt_subject as cnt 
+        , category_code, rx_display
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;
+
+-- ###########################################################
+CREATE TABLE htn__count_prevalence_rx_month AS 
+    with powerset as
+    (
+        select
+        count(distinct subject_ref)   as cnt_subject
+        
+        , category_code, rx_display, hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, authoredon_month        
+        FROM htn__prevalence_rx
+        group by CUBE
+        ( category_code, rx_display, hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, authoredon_month )
+    )
+    select
+          cnt_subject as cnt 
+        , category_code, rx_display, hypertension, hypertension_lab, hypertension_dx, age_at_visit, gender, race_display, ethnicity_display, authoredon_month
+    from powerset 
+    WHERE cnt_subject >= 10 
+    ;

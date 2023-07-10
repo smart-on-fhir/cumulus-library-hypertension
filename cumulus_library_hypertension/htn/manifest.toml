@@ -18,12 +18,12 @@ file_names = [
     "table_comorbidity.sql",
 
     # Count
-    "count.sql"
+    "count.sql",
 
     # Medication
-#    "define_rx.sql",
-#    "define_rx_exclude.sql",
-#    "table_rx.sql", # for sites that support MedicationRequest
+    "define_rx.sql",
+    "define_rx_exclude.sql",
+    "table_rx.sql", # for sites that support MedicationRequest
 
     # Encounter Types
 #    "define_enc_outpatient.sql",
@@ -61,5 +61,7 @@ export_list = [
     "htn__count_comorbidity_period",
     "htn__count_comorbidity_period_month",
     "htn__count_comorbidity_period_week",
+    "htn__count_rx",
+    "htn__count_prevalence_rx_month"
 ]
 

@@ -71,6 +71,34 @@ def count_dx_period(duration=None):
 
     return counts.count_patient(view_name, from_table, cols)
 
+def count_rx(duration=None):
+    view_name = table('count_rx', duration)
+    from_table = table('rx')
+    cols = ['category_code', 'rx_display']
+
+    if duration:
+        cols.append(f'authoredon_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
+def count_prevalence_rx(duration=None):
+    view_name = table('count_prevalence_rx', duration)
+    from_table = table('prevalence_rx')
+    cols = ['category_code',
+            'rx_display',
+            'hypertension',
+            'hypertension_lab',
+            'hypertension_dx',
+            'age_at_visit',
+            'gender',
+            'race_display',
+            'ethnicity_display']
+
+    if duration:
+        cols.append(f'authoredon_{duration}')
+
+    return counts.count_patient(view_name, from_table, cols)
+
 def count_prevalence(duration='month'):
     view_name = table('count_prevalence', duration)
     from_table = table('prevalence')
@@ -116,16 +144,6 @@ def count_comorbidity_period(duration=None):
 
     if duration:
         cols.append(f'start_{duration}')
-
-    return counts.count_patient(view_name, from_table, cols)
-
-def count_rx(duration='month'):
-    view_name = table('count_rx', duration)
-    from_table = table('rx')
-    cols = ['category_code', 'rx_display']
-
-    if duration:
-        cols.append(f'authoredon_{duration}')
 
     return counts.count_patient(view_name, from_table, cols)
 
@@ -196,4 +214,7 @@ if __name__ == '__main__':
         count_comorbidity_period(),
         count_comorbidity_period('month'),
         count_comorbidity_period('week'),
+
+        count_rx(),
+        count_prevalence_rx('month'),
     ])
