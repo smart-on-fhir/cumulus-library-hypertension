@@ -45,7 +45,7 @@ file_names = [
 [export_config]
 export_list = [
     "htn__count_study_period_week",
-    "htn__count_study_period_date",
+    # "htn__count_study_period_date",
     "htn__count_bp",
     "htn__count_bp_month",
     "htn__count_bp_week",
