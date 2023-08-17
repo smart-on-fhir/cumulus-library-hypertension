@@ -1,9 +1,9 @@
 [project]
 name = "cumulus-library-hypertension"
 version = "0.1.0"
-requires-python = ">= 3.9, <3.12"
+requires-python = ">= 3.9"
 dependencies = [
-    "cumulus-library >= 0.4.0",
+    "cumulus-library >= 1.2.0",
     "sqlfluff == 2.0.2"
 ]
 description = "SQL generation for cumulus covid symptom analysis"
