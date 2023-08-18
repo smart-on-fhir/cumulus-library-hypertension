@@ -18,7 +18,8 @@ file_names = [
     "table_comorbidity.sql",
 
     # Count
-    "count.sql"
+    "count.sql",
+    "version.sql"
 
     # Medication
 #    "define_rx.sql",

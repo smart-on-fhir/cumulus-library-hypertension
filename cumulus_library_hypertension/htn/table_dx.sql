@@ -10,7 +10,7 @@ create table htn__dx as
 SELECT DISTINCT
     c.subject_ref,
     c.encounter_ref,
-    c.category.display as category_display,
+    c.category_display,
     dx.code AS cond_code,
     dx.display as cond_display,
     fhirspec.url as cond_system,
@@ -21,20 +21,18 @@ SELECT DISTINCT
 FROM
     htn__define_dx AS dx,
     core__fhir_define as fhirspec,
-    core__condition_codable_concepts cc,
     core__condition AS c
 WHERE
-    dx.code = cc.code           and
-    dx.system = cc.code_system  and
-    dx.system = fhirspec.url    and
-    cc.id = c.condition_id;
+    dx.code = c.code           and
+    dx.system = c.code_system  and
+    dx.system = fhirspec.url;
 
 
 create table htn__dx_period as
 SELECT DISTINCT
     c.subject_ref,
     c.encounter_ref,
-    c.category.display as category_display,
+    c.category_display,
     dx.code AS cond_code,
     dx.display as cond_display,
     fhirspec.url as cond_system,
@@ -53,11 +51,9 @@ FROM
     htn__define_dx AS dx,
     htn__study_period AS s,
     core__fhir_define as fhirspec,
-    core__condition_codable_concepts cc,
     core__condition AS c
 WHERE
-    dx.code = cc.code           and
-    dx.system = cc.code_system  and
+    dx.code = c.code           and
+    dx.system = c.code_system  and
     dx.system = fhirspec.url    and
-    cc.id = c.condition_id      and
     c.encounter_ref = s.encounter_ref;
