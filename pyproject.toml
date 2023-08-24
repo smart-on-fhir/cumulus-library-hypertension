@@ -1,6 +1,6 @@
 [project]
 name = "cumulus-library-hypertension"
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">= 3.9"
 dependencies = [
     "cumulus-library >= 1.2.0",
