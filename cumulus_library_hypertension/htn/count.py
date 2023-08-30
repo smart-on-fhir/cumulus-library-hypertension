@@ -2,7 +2,7 @@ from pathlib import Path
 from cumulus_library.schema.counts import CountsBuilder
 
 class HtnCountsBuilder(CountsBuilder):
-    display_text = "Creating core counts..."
+    display_text = "Creating htn counts..."
 
     def __init__(self):
         super().__init__()
