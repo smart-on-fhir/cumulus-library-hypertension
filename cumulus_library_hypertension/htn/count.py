@@ -1,199 +1,177 @@
-from typing import List
-from cumulus_library.schema import counts
+from pathlib import Path
+from cumulus_library.schema.counts import CountsBuilder
 
-STUDY_PREFIX = 'htn'
+class HtnCountsBuilder(CountsBuilder):
+    display_text = "Creating core counts..."
 
-def table(tablename: str, duration=None) -> str:
-    if duration:
-        return f'{STUDY_PREFIX}__{tablename}_{duration}'
-    else: 
-        return f'{STUDY_PREFIX}__{tablename}'
+    def __init__(self):
+        super().__init__()
 
-def count_study_period(duration=None):
-    view_name = table('count_study_period', duration)
-    from_table = table('study_period')
-    cols = ['enc_class_display',
-            'enc_type_display',
-            'age_at_visit',
-            'gender',
-            'race_display',
-            'ethnicity_display']
+    def count_study_period(self, duration=None):
+        view_name = self.get_table_name('count_study_period', duration)
+        from_table = self.get_table_name('study_period')
+        cols = ['enc_class_display',
+                'enc_type_display',
+                'age_at_visit',
+                'gender',
+                'race_display',
+                'ethnicity_display']
 
-    if duration:
-        cols.append(f'start_{duration}')
+        if duration:
+            cols.append(f'start_{duration}')
 
-    return counts.count_encounter(view_name, from_table, cols)
+        return self.count_encounter(view_name, from_table, cols)
 
-def count_bp(duration=None):
-    view_name = table('count_bp', duration)
-    from_table = table('bp')
-    cols = ['hypertension',
-            'hypotension',
-            'enc_class_display',
-            'enc_type_display',
-            'age_at_visit',
-            'gender',
-            'race_display',
-            'ethnicity_display']
+    def count_bp(self, duration=None):
+        view_name = self.get_table_name('count_bp', duration)
+        from_table = self.get_table_name('bp')
+        cols = ['hypertension',
+                'hypotension',
+                'enc_class_display',
+                'enc_type_display',
+                'age_at_visit',
+                'gender',
+                'race_display',
+                'ethnicity_display']
 
-    if duration:
-        cols.append(f'obs_{duration}')
+        if duration:
+            cols.append(f'obs_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_dx(duration=None):
-    view_name = table('count_dx', duration)
-    from_table = table('dx')
-    cols = ['category_display',
-            'cond_display',
-            'cond_system_display']
+    def count_dx(self, duration=None):
+        view_name = self.get_table_name('count_dx', duration)
+        from_table = self.get_table_name('dx')
+        cols = ['category_display',
+                'cond_display',
+                'cond_system_display']
 
-    if duration:
-        cols.append(f'cond_{duration}')
+        if duration:
+            cols.append(f'cond_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_dx_period(duration=None):
-    view_name = table('count_dx_period', duration)
-    from_table = table('dx_period')
-    cols = ['category_display',
-            'cond_display',
-            'cond_system_display',
-            'enc_class_display',
-            'enc_type_display',
-            'age_at_visit',
-            'gender',
-            'race_display',
-            'ethnicity_display']
+    def count_dx_period(self, duration=None):
+        view_name = self.get_table_name('count_dx_period', duration)
+        from_table = self.get_table_name('dx_period')
+        cols = ['category_display',
+                'cond_display',
+                'cond_system_display',
+                'enc_class_display',
+                'enc_type_display',
+                'age_at_visit',
+                'gender',
+                'race_display',
+                'ethnicity_display']
 
-    if duration:
-        cols.append(f'cond_{duration}')
+        if duration:
+            cols.append(f'cond_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_prevalence(duration='month'):
-    view_name = table('count_prevalence', duration)
-    from_table = table('prevalence')
-    cols = ['hypertension',
-            'hypertension_lab',
-            'hypertension_dx',
-            'age_at_visit',
-            'gender',
-            'race_display',
-            'ethnicity_display']
+    def count_prevalence(self, duration='month'):
+        view_name = self.get_table_name('count_prevalence', duration)
+        from_table = self.get_table_name('prevalence')
+        cols = ['hypertension',
+                'hypertension_lab',
+                'hypertension_dx',
+                'age_at_visit',
+                'gender',
+                'race_display',
+                'ethnicity_display']
 
-    if duration:
-        cols.append(f'start_{duration}')
+        if duration:
+            cols.append(f'start_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_comorbidity(duration=None):
-    view_name = table('count_comorbidity', duration)
-    from_table = table('comorbidity')
-    cols = ['comorbidity_category_display',
-            'comorbidity_system_display',
-            'comorbidity_display',
-            'gender',
-            'race_display',
-            'ethnicity_display']
+    def count_comorbidity(self, duration=None):
+        view_name = self.get_table_name('count_comorbidity', duration)
+        from_table = self.get_table_name('comorbidity')
+        cols = ['comorbidity_category_display',
+                'comorbidity_system_display',
+                'comorbidity_display',
+                'gender',
+                'race_display',
+                'ethnicity_display']
 
-    if duration:
-        cols.append(f'comorbidity_{duration}')
+        if duration:
+            cols.append(f'comorbidity_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_comorbidity_period(duration=None):
-    view_name = table('count_comorbidity_period', duration)
-    from_table = table('comorbidity_period')
-    cols = ['comorbidity_category_display',
-            'comorbidity_system_display',
-            'comorbidity_display',
-            'enc_class_display',
-            'age_at_visit',
-            'gender',
-            'race_display',
-            'ethnicity_display']
+    def count_comorbidity_period(self, duration=None):
+        view_name = self.get_table_name('count_comorbidity_period', duration)
+        from_table = self.get_table_name('comorbidity_period')
+        cols = ['comorbidity_category_display',
+                'comorbidity_system_display',
+                'comorbidity_display',
+                'enc_class_display',
+                'age_at_visit',
+                'gender',
+                'race_display',
+                'ethnicity_display']
 
-    if duration:
-        cols.append(f'start_{duration}')
+        if duration:
+            cols.append(f'start_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_rx(duration='month'):
-    view_name = table('count_rx', duration)
-    from_table = table('rx')
-    cols = ['category_code', 'rx_display']
+    def count_rx(self, duration='month'):
+        view_name = self.get_table_name('count_rx', duration)
+        from_table = self.get_table_name('rx')
+        cols = ['category_code', 'rx_display']
 
-    if duration:
-        cols.append(f'authoredon_{duration}')
+        if duration:
+            cols.append(f'authoredon_{duration}')
 
-    return counts.count_patient(view_name, from_table, cols)
+        return self.count_patient(view_name, from_table, cols)
 
-def count_procedure(duration=None):
-    view_name = table('count_procedure', duration)
-    from_table = table('procedure')
-    cols = ['enc_class_display', 'proc_display', 'proc_system']
+    def count_procedure(self, duration=None):
+        view_name = self.get_table_name('count_procedure', duration)
+        from_table = self.get_table_name('procedure')
+        cols = ['enc_class_display', 'proc_display', 'proc_system']
 
-    if duration:
-        cols.append(f'enc_start_{duration}')
+        if duration:
+            cols.append(f'enc_start_{duration}')
 
-    return counts.count_encounter(view_name, from_table, cols)
+        return self.count_encounter(view_name, from_table, cols)
 
-def concat_view_sql(create_view_list: List[str]) -> str:
-    """
-    :param create_view_list: SQL prepared statements
-    """
-    seperator = '-- ###########################################################'
-    concat = list()
+    def prepare_queries(self, cursor=None, schema=None):
+        self.queries =[
+            self.count_study_period(),
+            self.count_study_period('month'),
+            self.count_study_period('week'),
 
-    for create_view in create_view_list:
-        concat.append(seperator + '\n'+create_view + '\n')
+            # FHIR Observation
+            self.count_bp(),
+            self.count_bp('month'),
+            self.count_bp('week'),
+            self.count_bp('date'),
 
-    return '\n'.join(concat)
+            # FHIR Condition with FHIR Encounter
+            self.count_dx('month'),
+            self.count_dx('week'),
+            self.count_dx('date'),
 
-def write_view_sql(view_list_sql: List[str], filename='count.sql') -> None:
-    """
-    :param view_list_sql: SQL prepared statements
-    :param filename: path to output file, default 'count.sql' in PWD
-    """
-    sql_optimizer = concat_view_sql(view_list_sql)
-    sql_optimizer = sql_optimizer.replace("ORDER BY cnt desc", "")
-    sql_optimizer = sql_optimizer.replace("CREATE or replace VIEW", 'CREATE TABLE')
-    with open(filename, 'w') as fout:
-        fout.write(sql_optimizer)
+            # FHIR Condition with FHIR Encounter
+            self.count_dx_period('month'),
+            self.count_dx_period('week'),
+            self.count_dx_period('date'),
+
+            self.count_prevalence('month'),
+            self.count_prevalence('week'),
+
+            self.count_comorbidity(),
+            self.count_comorbidity('month'),
+            self.count_comorbidity('week'),
+
+            self.count_comorbidity_period(),
+            self.count_comorbidity_period('month'),
+            self.count_comorbidity_period('week'),
+        ]
 
 
-if __name__ == '__main__':
-    write_view_sql([
-
-        count_study_period(),
-        count_study_period('month'),
-        count_study_period('week'),
-
-        # FHIR Observation
-        count_bp(),
-        count_bp('month'),
-        count_bp('week'),
-        count_bp('date'),
-
-        # FHIR Condition with FHIR Encounter
-        count_dx('month'),
-        count_dx('week'),
-        count_dx('date'),
-
-        # FHIR Condition with FHIR Encounter
-        count_dx_period('month'),
-        count_dx_period('week'),
-        count_dx_period('date'),
-
-        count_prevalence('month'),
-        count_prevalence('week'),
-
-        count_comorbidity(),
-        count_comorbidity('month'),
-        count_comorbidity('week'),
-
-        count_comorbidity_period(),
-        count_comorbidity_period('month'),
-        count_comorbidity_period('week'),
-    ])
+if __name__ == "__main__":
+    builder = HtnCountsBuilder()
+    builder.write_counts(f"{Path(__file__).resolve().parent}/count.sql")
