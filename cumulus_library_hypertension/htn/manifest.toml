@@ -18,7 +18,6 @@ file_names = [
     "table_comorbidity.sql",
 
     # Count
-#    "count.sql",
     "version.sql"
 
     # Medication
@@ -45,7 +44,7 @@ file_names = [
 
 [counts_builder_config]
 file_names = [
-    "count.py"
+    "counts.py"
 ]
 
 [export_config]
