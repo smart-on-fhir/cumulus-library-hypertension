@@ -13,19 +13,19 @@ SELECT DISTINCT
     c.category_display,
     dx.code AS cond_code,
     dx.display as cond_display,
-    fhirspec.url as cond_system,
-    fhirspec.define as cond_system_display,
+    fhirspec.uri as cond_system,
+    fhirspec.code_system as cond_system_display,
     c.recorded_month AS cond_month,
     c.recorded_week AS cond_week,
     c.recordeddate as cond_date
 FROM
     htn__define_dx AS dx,
-    core__fhir_define as fhirspec,
+    core__fhir_mapping_code_system_uri as fhirspec,
     core__condition AS c
 WHERE
     dx.code = c.code           and
     dx.system = c.code_system  and
-    dx.system = fhirspec.url;
+    dx.system = fhirspec.uri;
 
 
 create table htn__dx_period as
@@ -35,8 +35,8 @@ SELECT DISTINCT
     c.category_display,
     dx.code AS cond_code,
     dx.display as cond_display,
-    fhirspec.url as cond_system,
-    fhirspec.define as cond_system_display,
+    fhirspec.uri as cond_system,
+    fhirspec.code_system as cond_system_display,
     c.recordeddate as cond_date,
     c.recorded_month AS cond_month,
     c.recorded_week AS cond_week,
@@ -50,10 +50,10 @@ SELECT DISTINCT
 FROM
     htn__define_dx AS dx,
     htn__study_period AS s,
-    core__fhir_define as fhirspec,
+    core__fhir_mapping_code_system_uri as fhirspec,
     core__condition AS c
 WHERE
     dx.code = c.code           and
     dx.system = c.code_system  and
-    dx.system = fhirspec.url    and
+    dx.system = fhirspec.uri    and
     c.encounter_ref = s.encounter_ref;

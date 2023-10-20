@@ -174,4 +174,4 @@ class HtnCountsBuilder(CountsBuilder):
 
 if __name__ == "__main__":
     builder = HtnCountsBuilder()
-    builder.write_counts(f"{Path(__file__).resolve().parent}/count.sql")
+    builder.write_counts(f"{Path(__file__).resolve().parent}/counts.sql")
