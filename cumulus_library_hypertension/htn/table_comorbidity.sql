@@ -12,15 +12,15 @@ WITH condition_row AS
         c.category_display as comorbidity_category_display,
         c.code AS comorbidity_code,
         c.code_display as comorbidity_display,
-        fhirspec.define as comorbidity_system_display,
+        fhirspec.code_system as comorbidity_system_display,
         c.recorded_month AS comorbidity_month,
         c.recorded_week AS comorbidity_week,
         c.recordeddate as comorbidity_date
     FROM
         core__condition AS c,
-        core__fhir_define as fhirspec
+        core__fhir_mapping_code_system_uri as fhirspec
     WHERE
-        c.code_system = fhirspec.url   and
+        c.code_system = fhirspec.uri   and
         c.code not in (select distinct code from htn__define_dx)
 )
 select distinct
