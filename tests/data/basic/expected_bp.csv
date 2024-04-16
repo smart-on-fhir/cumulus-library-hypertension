@@ -1,0 +1,2 @@
+bp_display,hypertension,hypotension,systolic_high,systolic_low,diastolic_high,diastolic_low,obs_date,obs_week,obs_month,subject_ref,encounter_ref,observation_ref,enc_class_code,enc_class_display,enc_type_display,age_at_visit,gender,race_display,ethnicity_display
+89.0/59.0,false,true,false,true,false,true,2023-10-17,2023-10-16,2023-10-01,Patient/A,Encounter/A,Observation/A.hypotension,AMB,ambulatory,Outpatient Kenacort injection,23,female,asian,hispanic or latino

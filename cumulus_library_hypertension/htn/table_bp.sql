@@ -39,7 +39,7 @@ from    define_panel,
         define_component,
         core__observation_vital_signs as O,
         UNNEST(O.component) t (component_part),
-        UNNEST(component_part.code.coding) t (component_code)
+        UNNEST(component_part.code.coding) u (component_code)
 where   define_panel.code = O.obs_code.code
 and     define_component.code = component_code.code
 ;

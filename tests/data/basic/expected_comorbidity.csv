@@ -1,0 +1,2 @@
+subject_ref,encounter_ref,comorbidity_category_display,comorbidity_code,comorbidity_display,comorbidity_system_display,comorbidity_month,comorbidity_week,comorbidity_date,gender,race_display,ethnicity_display
+Patient/A,Encounter/A,Encounter Diagnosis,J18.1,Right upper lobe pneumonia,ICD10,2023-10-01,2023-10-16,2023-10-17,female,asian,hispanic or latino

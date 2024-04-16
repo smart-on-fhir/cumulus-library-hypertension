@@ -1,0 +1,2 @@
+subject_ref,encounter_ref,category_display,cond_code,cond_display,cond_system,cond_system_display,cond_month,cond_week,cond_date
+Patient/A,Encounter/A,Encounter Diagnosis,I10,Essential (primary) hypertension,http://hl7.org/fhir/sid/icd-10-cm,ICD10,2023-10-01,2023-10-16,2023-10-17
