@@ -15,9 +15,9 @@ SELECT DISTINCT
     dx.display as cond_display,
     fhirspec.uri as cond_system,
     fhirspec.code_system as cond_system_display,
-    c.recorded_month AS cond_month,
-    c.recorded_week AS cond_week,
-    c.recordeddate as cond_date
+    c.recordedDate_month AS cond_month,
+    c.recordedDate_week AS cond_week,
+    c.recordedDate as cond_date
 FROM
     htn__define_dx AS dx,
     core__fhir_mapping_code_system_uri as fhirspec,
@@ -37,9 +37,9 @@ SELECT DISTINCT
     dx.display as cond_display,
     fhirspec.uri as cond_system,
     fhirspec.code_system as cond_system_display,
-    c.recordeddate as cond_date,
-    c.recorded_month AS cond_month,
-    c.recorded_week AS cond_week,
+    c.recordedDate as cond_date,
+    c.recordedDate_month AS cond_month,
+    c.recordedDate_week AS cond_week,
     s.enc_class_code,
     s.enc_class_display,
     s.enc_type_display,
