@@ -13,9 +13,9 @@ WITH condition_row AS
         c.code AS comorbidity_code,
         c.code_display as comorbidity_display,
         fhirspec.code_system as comorbidity_system_display,
-        c.recorded_month AS comorbidity_month,
-        c.recorded_week AS comorbidity_week,
-        c.recordeddate as comorbidity_date
+        c.recordedDate_month AS comorbidity_month,
+        c.recordedDate_week AS comorbidity_week,
+        c.recordedDate as comorbidity_date
     FROM
         core__condition AS c,
         core__fhir_mapping_code_system_uri as fhirspec

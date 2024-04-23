@@ -3,6 +3,7 @@ data_export/
 .python-version
 .DS_Store
 cumulus_library_columns.json
+/.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

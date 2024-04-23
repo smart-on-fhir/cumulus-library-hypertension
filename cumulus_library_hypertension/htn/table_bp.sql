@@ -24,13 +24,12 @@ define_component as
     (select * from htn__define_bp where component!='panel')
 select distinct
     define_component.*,
-    component_code,
-    component_part.valueQuantity,
-    component_part.valueQuantity.value as mmHg,
-    O.obs_date,
-    O.obs_week,
-    O.obs_month,
-    O.obs_year,
+    OCC.code as component_code,
+    OCVQ.value as mmHg,
+    O.effectiveDateTime_day as obs_date,
+    O.effectiveDateTime_week as obs_week,
+    O.effectiveDateTime_month as obs_month,
+    O.effectiveDateTime_year as obs_year,
     status,
     O.observation_ref,
     O.encounter_ref,
@@ -38,10 +37,15 @@ select distinct
 from    define_panel,
         define_component,
         core__observation_vital_signs as O,
-        UNNEST(O.component) t (component_part),
-        UNNEST(component_part.code.coding) t (component_code)
-where   define_panel.code = O.obs_code.code
-and     define_component.code = component_code.code
+        core__observation_component_code as OCC,
+        core__observation_component_valuequantity as OCVQ,
+where   define_panel.code = O.observation_code
+and     define_panel.system = O.observation_code_system
+and     define_component.code = OCC.code
+and     define_component.system = OCC.code_system
+and     O.id = OCC.id
+and     O.id = OCVQ.id
+and     OCC.row = OCVQ.row
 ;
 
 -- #########################################################################
