@@ -4,13 +4,17 @@ import glob
 import os
 import tempfile
 import unittest
+from unittest import mock
 
 import ddt
 import duckdb
 
 from cumulus_library import cli
 
-
+@mock.patch.dict(
+    os.environ,
+    clear=True,
+)
 @ddt.ddt
 class HypertensionTestCase(unittest.TestCase):
     """Test case for the hypertension study writ large."""
@@ -62,7 +66,6 @@ class HypertensionTestCase(unittest.TestCase):
                 sorted_table.to_csv(csv_path)
                 with open(csv_path, "r", encoding="utf8") as f:
                     csv = f.read()
-
                 expected_path = f"{data_dir}/expected{short_name}.csv"
                 with open(expected_path, "r", encoding="utf8") as f:
                     expected_lines = f.readlines()

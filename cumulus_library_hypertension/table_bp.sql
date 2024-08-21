@@ -38,11 +38,11 @@ from    define_panel,
         define_component,
         core__observation_vital_signs as O,
         core__observation_component_code as OCC,
-        core__observation_component_valuequantity as OCVQ,
+        core__observation_component_valuequantity as OCVQ
 where   define_panel.code = O.observation_code
-and     define_panel.system = O.observation_code_system
+and     define_panel.system = O.observation_system
 and     define_component.code = OCC.code
-and     define_component.system = OCC.code_system
+and     define_component.system = OCC.system
 and     O.id = OCC.id
 and     O.id = OCVQ.id
 and     OCC.row = OCVQ.row

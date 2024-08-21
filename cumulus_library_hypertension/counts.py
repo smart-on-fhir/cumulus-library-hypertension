@@ -1,7 +1,8 @@
-from pathlib import Path
-from cumulus_library.statistics.counts import CountsBuilder
+import cumulus_library
+import pathlib
 
-class HtnCountsBuilder(CountsBuilder):
+
+class HtnCountsBuilder(cumulus_library.CountsBuilder):
     display_text = "Creating htn counts..."
 
     def __init__(self):
@@ -174,4 +175,4 @@ class HtnCountsBuilder(CountsBuilder):
 
 if __name__ == "__main__":
     builder = HtnCountsBuilder()
-    builder.write_counts(f"{Path(__file__).resolve().parent}/counts.sql")
+    builder.write_counts(f"{pathlib.Path(__file__).resolve().parent}/counts.sql")

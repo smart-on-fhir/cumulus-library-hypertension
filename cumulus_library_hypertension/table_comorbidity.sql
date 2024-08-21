@@ -20,7 +20,7 @@ WITH condition_row AS
         core__condition AS c,
         core__fhir_mapping_code_system_uri as fhirspec
     WHERE
-        c.code_system = fhirspec.uri   and
+        c.system = fhirspec.uri   and
         c.code not in (select distinct code from htn__define_dx)
 )
 select distinct
