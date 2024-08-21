@@ -42,7 +42,7 @@ from    define_panel,
 where   define_panel.code = O.observation_code
 and     define_panel.system = O.observation_system
 and     define_component.code = OCC.code
-and     define_component.system = OCC.code_system
+and     define_component.system = OCC.system
 and     O.id = OCC.id
 and     O.id = OCVQ.id
 and     OCC.row = OCVQ.row

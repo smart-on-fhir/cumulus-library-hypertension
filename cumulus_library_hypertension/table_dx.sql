@@ -24,7 +24,7 @@ FROM
     core__condition AS c
 WHERE
     dx.code = c.code           and
-    dx.system = c.code_system  and
+    dx.system = c.system  and
     dx.system = fhirspec.uri;
 
 
@@ -54,6 +54,6 @@ FROM
     core__condition AS c
 WHERE
     dx.code = c.code           and
-    dx.system = c.code_system  and
+    dx.system = c.system  and
     dx.system = fhirspec.uri    and
     c.encounter_ref = s.encounter_ref;
